@@ -1,4 +1,4 @@
-# Workflow v4: Codex lap plan + review, Muse thuc thi
+# Workflow v5 (de xuat): Codex lap plan + review, Muse thuc thi
 
 ## 1. Vai tro va quyen (nguyen tac: moi ben chi co dung quyen can thiet)
 
@@ -85,9 +85,42 @@ Code do agent sinh ra (ke ca `CMakeLists.txt`, script build) chay duoc lenh tuy 
 3. Chinh `ci.yml` cho khop build that (generator, ten test, thu muc `build/golden-diff`).
 4. Chinh 3 bien "project-specific" trong `scripts/verify-windows.ps1`; chay thu bang `-Pr <so>` khong co `-PostStatus`.
 5. Dat label cho test can may that trong CMake, khop voi regex `$RealMachineTests` trong script (vd. `set_tests_properties(... PROPERTIES LABELS "golden;gpu;dpi;perf")`).
-6. Chay `./scripts/apply-branch-protection.sh OWNER/REPO` **sau khi** PR dau tien da co `ci-gate` va `verify/windows-real` (de GitHub nhan ra ten check).
+6. Owner chay `./scripts/apply-branch-protection.sh vietnamnguyen-owner/ffgg-comp` **sau khi** PR dau tien da co `ci-gate` va `verify/windows-real` (de GitHub nhan ra ten check).
    Luu y: ruleset tren repo private can goi tra phi cua GitHub.
 7. Sanitizer (phase 2, sau checkpoint thu dau tien): them job ASan cho MSVC vao
    `ci.yml` (`/fsanitize=address` o ca compile lan link; chu y MSVC khong cho dung
    chung voi `/RTC1` nen phai viet lai `CMAKE_CXX_FLAGS_DEBUG` thay vi cong them),
    roi dua job vao `needs` cua `ci-gate`.
+
+## 9. Danh tinh, plan va quyen merge
+
+- Owner: `vietnamnguyen-owner`; Codex: `vietnamnguyen-codex`; Muse: `vietnamnguyen-muse`.
+- Repository variable `CODEX_LOGIN` phai la username `vietnamnguyen-codex`, khong phai display name.
+- `docs/plan.md` nam trong CODEOWNERS: owner phai duyet ca plan dau tien va moi thay doi sau do.
+- File JSON trong repo chi la cau hinh cho den khi owner ap dung bang API/UI.
+
+Ap dung **hai ruleset dong thoi**, cung nham nhanh mac dinh:
+
+1. `main-protection`: review, CODEOWNERS, review moi sau push, giai quyet thread,
+   `ci-gate` va `verify/windows-real`; **khong ai co bypass**.
+2. `main-owner-only`: restrict updates, chi owner user ID `127170901` duoc bypass
+   **qua PR**. Codex/Muse khong duoc merge. Owner bypass rule thu hai khong bypass
+   review/check o rule thu nhat; owner cung khong duoc direct-push main.
+
+Khong gop owner bypass vao rule thu nhat. Sau khi doi owner repo phai review lai cau hinh.
+Tham khao GitHub: [rule layering](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets#about-rule-layering)
+va [REST rulesets / User bypass](https://docs.github.com/en/rest/repos/rules).
+
+## 10. Bootstrap hien tai
+
+Repo chua co source san pham; CI hien do vi khong co `CMakeLists.txt` o goc.
+Khong skip build, tao test gia hoac post verify success de vuot giai doan nay.
+`docs/plan.md` la **ban nhap bootstrap**, chua la lenh cho Muse thi cong.
+Owner can duyet pham vi import source va quyet dinh trinh tu bootstrap truoc khi
+co bat ky merge nao; tai lieu nay khong tu cho phep ngoai le merge khi CI do.
+PR hien tai giu draft khi cac cong CI/verify chua dat.
+
+Source local canonical la `D:\Vibecode\ffggcomp_project`; `D:\Vibecode\ffgg-comp`
+la archive. Khong upload Qt SDK/build/release hoac tu khoi phuc cac node da reset.
+Huong dan local cu ve vai tro single-writer la ho so lich su; vai tro GitHub moi
+theo muc 1, trong khi cong owner chot UI truoc code node van giu nguyen.
