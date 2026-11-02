@@ -1,0 +1,39 @@
+name: Review round cap
+
+# Khong checkout code cua PR, chi goi API. File nay nam trong CODEOWNERS.
+# Can dat Repository variable CODEX_LOGIN = GitHub login cua tai khoan Codex.
+on:
+  pull_request_review:
+    types: [submitted]
+
+permissions:
+  pull-requests: write
+  issues: write
+
+jobs:
+  cap:
+    if: >
+      github.event.review.state == 'changes_requested' &&
+      github.event.review.user.login == vars.CODEX_LOGIN
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dem so lan Codex Request-changes
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+          CODEX: ${{ vars.CODEX_LOGIN }}
+          MAX_FIX_ROUNDS: "2"
+        run: |
+          set -euo pipefail
+          n=$(gh api --paginate "repos/$REPO/pulls/$PR/reviews" \
+                --jq '.[] | select(.state=="CHANGES_REQUESTED") | .user.login' | grep -cx "$CODEX" || true)
+          echo "Codex Request-changes: $n (toi da $MAX_FIX_ROUNDS vong sua)"
+
+          # Lan 1 -> sua vong 1; lan 2 -> sua vong 2; lan 3 -> dung.
+          if [ "$n" -gt "$MAX_FIX_ROUNDS" ]; then
+            gh label create needs-human --repo "$REPO" --color B60205 \
+              --description "Agent phai dung, cho nguoi quyet dinh" 2>/dev/null || true
+            gh pr edit "$PR" --repo "$REPO" --add-label needs-human
+            gh pr comment "$PR" --repo "$REPO" --body "Đã qua $MAX_FIX_ROUNDS vòng sửa mà review vẫn chưa qua. Dừng vòng tự sửa, cần bạn chỉ định hướng."
+          fi

@@ -1,0 +1,13 @@
+# Chung cu (evidence) va luat kiem tra: Muse khong duoc tu sua.
+# Da dien san: vietnamnguyeen (tai khoan chu repo, KHAC tai khoan Muse dung de push).
+/.github/workflows/            @vietnamnguyeen
+/.github/CODEOWNERS            @vietnamnguyeen
+/.github/rulesets/             @vietnamnguyeen
+/tests/golden/                 @vietnamnguyeen
+/docs/review-checklist.md      @vietnamnguyeen
+/docs/workflow.md              @vietnamnguyeen
+/scripts/verify-windows.ps1    @vietnamnguyeen
+/CMakePresets.json             @vietnamnguyeen
+# Tuy chon, cung hon: chan ca cmake/ va scripts/ (build script chay duoc lenh tuy y)
+# /cmake/                      @vietnamnguyeen
+# /scripts/                    @vietnamnguyeen
