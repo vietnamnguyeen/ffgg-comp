@@ -1,13 +1,13 @@
 # Chung cu (evidence) va luat kiem tra: Muse khong duoc tu sua.
-# Da dien san: vietnamnguyeen (tai khoan chu repo, KHAC tai khoan Muse dung de push).
-/.github/workflows/            @vietnamnguyeen
-/.github/CODEOWNERS            @vietnamnguyeen
-/.github/rulesets/             @vietnamnguyeen
-/tests/golden/                 @vietnamnguyeen
-/docs/review-checklist.md      @vietnamnguyeen
-/docs/workflow.md              @vietnamnguyeen
-/scripts/verify-windows.ps1    @vietnamnguyeen
-/CMakePresets.json             @vietnamnguyeen
+# Da dien san: vietnamnguyen-owner (tai khoan chu repo, KHAC tai khoan Muse dung de push).
+/.github/workflows/            @vietnamnguyen-owner
+/.github/CODEOWNERS            @vietnamnguyen-owner
+/.github/rulesets/             @vietnamnguyen-owner
+/tests/golden/                 @vietnamnguyen-owner
+/docs/review-checklist.md      @vietnamnguyen-owner
+/docs/workflow.md              @vietnamnguyen-owner
+/scripts/verify-windows.ps1    @vietnamnguyen-owner
+/CMakePresets.json             @vietnamnguyen-owner
 # Tuy chon, cung hon: chan ca cmake/ va scripts/ (build script chay duoc lenh tuy y)
-# /cmake/                      @vietnamnguyeen
-# /scripts/                    @vietnamnguyeen
+# /cmake/                      @vietnamnguyen-owner
+# /scripts/                    @vietnamnguyen-owner
