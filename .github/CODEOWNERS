@@ -6,6 +6,7 @@
 /tests/golden/                 @vietnamnguyen-owner
 /docs/review-checklist.md      @vietnamnguyen-owner
 /docs/workflow.md              @vietnamnguyen-owner
+/docs/plan.md                  @vietnamnguyen-owner
 /scripts/verify-windows.ps1    @vietnamnguyen-owner
 /CMakePresets.json             @vietnamnguyen-owner
 # Tuy chon, cung hon: chan ca cmake/ va scripts/ (build script chay duoc lenh tuy y)
